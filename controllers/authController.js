@@ -14,6 +14,21 @@ const signup = async (req, res) => {
         .json({ message: "Veuillez remplir tous les champs" });
     }
 
+    const checkInstagram = await query(
+      "SELECT * FROM users WHERE instagram = ?",
+      [instagram],
+    );
+
+    // Vérification de l'existence de l'utilisateur
+    if (checkInstagram.length > 0) {
+      return res
+        .status(400)
+        .json({
+          message:
+            "L'utilisateur existe déjà, contact @celest_pulv si tu n'as jamais créer de compte",
+        });
+    }
+
     // Vérification des insultes
     // Création d'une instance de la classe BadWordsFilter
     // et ajout de mots à filtrer
@@ -203,6 +218,9 @@ const login = async (req, res) => {
       "SELECT id, password FROM users WHERE instagram = ?",
       [instagram],
     );
+
+    console.log(user[0].password);
+    console.log(password);
 
     // Check if the user exists
     if (user.length === 0) {
