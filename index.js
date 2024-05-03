@@ -16,5 +16,5 @@ app.use(cookieParser());
 app.use(router);
 // Start the server
 app.listen(port, () =>
-  console.log(`Server is running on http://${ip.address()}:${port}`),
+  console.log(`Server is running on http:/localhost:${port}`),
 );

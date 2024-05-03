@@ -21,12 +21,10 @@ const signup = async (req, res) => {
 
     // Vérification de l'existence de l'utilisateur
     if (checkInstagram.length > 0) {
-      return res
-        .status(400)
-        .json({
-          message:
-            "L'utilisateur existe déjà, contact @celest_pulv si tu n'as jamais créer de compte",
-        });
+      return res.status(400).json({
+        message:
+          "L'utilisateur existe déjà, contact @celest_pulv si tu n'as jamais créer de compte",
+      });
     }
 
     // Vérification des insultes
@@ -213,20 +211,21 @@ const signup = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { instagram, password } = req.body;
+    console.log(instagram);
+    console.log(password);
 
     const user = await query(
       "SELECT id, password FROM users WHERE instagram = ?",
       [instagram],
     );
 
-    console.log(user[0].password);
-    console.log(password);
+    console.log(user);
 
     // Check if the user exists
     if (user.length === 0) {
       return res.status(400).json({ message: "L'utilisateur n'existe pas" });
     }
-
+    // si le user est une liste vide alors on retourne un message d'erreur
     // Verify the password
     const validPassword = await bcrypt.compare(password, user[0].password);
 

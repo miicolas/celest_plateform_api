@@ -5,6 +5,6 @@ const router = express.Router();
 import { createEvent, getEvents } from "../controllers/eventController.js";
 
 router.post("/createevent", createEvent);
-router.post("/getevents", getEvents);
+router.get("/getevents", getEvents);
 
 export default router;
