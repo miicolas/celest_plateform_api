@@ -235,7 +235,7 @@ const login = async (req, res) => {
       expiresIn: "24h",
     });
 
-    // console.log(token, "token login");
+    console.log(token, "token login");
 
     res.status(200).json({ token: token });
   } catch (error) {
