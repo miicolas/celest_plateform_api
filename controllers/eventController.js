@@ -18,7 +18,6 @@ const createEvent = async (req, res) => {
 
 const getEvents = async (req, res) => {
   try {
-    console.log("getEvents"); // Debugging
     const events = await query("SELECT * FROM events");
 
     console.log(events);

@@ -219,14 +219,11 @@ const login = async (req, res) => {
       [instagram],
     );
 
-    console.log(user);
+    // console.log(user);
 
-    // Check if the user exists
     if (user.length === 0) {
       return res.status(400).json({ message: "L'utilisateur n'existe pas" });
     }
-    // si le user est une liste vide alors on retourne un message d'erreur
-    // Verify the password
     const validPassword = await bcrypt.compare(password, user[0].password);
 
     if (!validPassword) {
@@ -235,8 +232,10 @@ const login = async (req, res) => {
 
     // Generate and send the JWT token
     const token = jwt.sign({ id: user[0].id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
+      expiresIn: "24h",
     });
+
+    // console.log(token, "token login");
 
     res.status(200).json({ token: token });
   } catch (error) {
