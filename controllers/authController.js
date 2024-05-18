@@ -5,10 +5,10 @@ import BadWordsFilter from "bad-words";
 
 const signup = async (req, res) => {
   try {
-    const { instagram, firstname, lastname, password } = req.body;
+    const { instagram, firstname, lastname, password, school } = req.body;
 
     // Vérification des champs requis
-    if (!instagram || !firstname || !lastname || !password) {
+    if (!instagram || !firstname || !lastname || !password || !school) {
       return res
         .status(400)
         .json({ message: "Veuillez remplir tous les champs" });
@@ -198,8 +198,8 @@ const signup = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     await query(
-      "INSERT INTO users (instagram, firstname, lastname, password) VALUES (?, ?, ?, ?)",
-      [instagram, firstname, lastname, hashedPassword],
+      "INSERT INTO users (instagram, firstname, lastname, password, school) VALUES (?, ?, ?, ?, ?)",
+      [instagram, firstname, lastname, hashedPassword, school],
     );
 
     res.status(200).json({ message: "User created" });
