@@ -55,7 +55,7 @@ const getEvent = async (req, res) => {
 
     console.log(data_user, "data_user getEvent");
 
-    res.status(200).json({ event: event, data_user: data_user });
+    res.status(200).json({ event, data_user });
   } catch (error) {
     console.error("Error fetching event:", error);
     res.status(400).json({ error: error.message });
