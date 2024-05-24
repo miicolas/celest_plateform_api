@@ -27,33 +27,38 @@ const getEvents = async (req, res) => {
     res.status(400).json({ error: error });
   }
 };
-
 const getEvent = async (req, res) => {
   try {
     console.log(req.params);
     const { id_name } = req.params;
 
-    console.log(id_name);
+    console.log(id_name, "id_name getEvent");
 
     const id_user = req.user.id;
 
-    console.log(id_user);
+    console.log(id_user, "id_user getEvent");
+
     const event = await query("SELECT * FROM events WHERE id_name = ?", [
       id_name,
     ]);
 
-    console.log(event);
+    if (event.length === 0) {
+      return res.status(404).json({ error: "Event not found" });
+    }
+
+    console.log(event, "event getEvent");
 
     const data_user = await query(
-      "SELECT * FROM user_events WHERE id_event = ? AND where id_user = ?",
+      "SELECT * FROM user_events WHERE id_event = ? AND id_user = ?",
       [event[0].id_event, id_user],
     );
 
-    console.log(participants_data);
+    console.log(data_user, "data_user getEvent");
 
     res.status(200).json({ event: event, data_user: data_user });
   } catch (error) {
-    res.status(400).json({ error: error });
+    console.error("Error fetching event:", error);
+    res.status(400).json({ error: error.message });
   }
 };
 
